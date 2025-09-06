@@ -8,3 +8,4 @@ resources:
   - mysql/mysql-pv-claim.yaml
   - mysql/mysql-statefulset.yaml
   - mysql/mysql-secret.yaml
+  - phpmyadmin/
