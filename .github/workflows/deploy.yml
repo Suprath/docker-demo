@@ -79,6 +79,10 @@ jobs:
         run: |
           microk8s kubectl --kubeconfig=kubeconfig -n test apply -k k8s/overlays/test
           microk8s kubectl --kubeconfig=kubeconfig -n test set image deployment/laravel-app laravel-app=${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}
+          microk8s kubectl --kubeconfig=kubeconfig -n test delete job laravel-migration --ignore-not-found
+          sed -i "s|image: ghcr.io/Suprath/docker-demo:latest|image: ${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}|g" k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n test apply -f k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n test wait --for=condition=complete job/laravel-migration --timeout=2m
           
 
   deploy_staging:
@@ -94,6 +98,10 @@ jobs:
         run: |
           microk8s kubectl --kubeconfig=kubeconfig -n staging apply -k k8s/overlays/staging
           microk8s kubectl --kubeconfig=kubeconfig -n staging set image deployment/laravel-app laravel-app=${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}
+          microk8s kubectl --kubeconfig=kubeconfig -n staging delete job laravel-migration --ignore-not-found
+          sed -i "s|image: ghcr.io/Suprath/docker-demo:latest|image: ${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}|g" k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n staging apply -f k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n staging wait --for=condition=complete job/laravel-migration --timeout=2m
           
 
   deploy_production:
@@ -110,4 +118,8 @@ jobs:
         run: |
           microk8s kubectl --kubeconfig=kubeconfig -n production apply -k k8s/overlays/production
           microk8s kubectl --kubeconfig=kubeconfig -n production set image deployment/laravel-app larvel-app=${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}
+          microk8s kubectl --kubeconfig=kubeconfig -n production delete job laravel-migration --ignore-not-found
+          sed -i "s|image: ghcr.io/Suprath/docker-demo:latest|image: ${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}|g" k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n production apply -f k8s/base/migration-job.yaml
+          microk8s kubectl --kubeconfig=kubeconfig -n production wait --for=condition=complete job/laravel-migration --timeout=2m
           
