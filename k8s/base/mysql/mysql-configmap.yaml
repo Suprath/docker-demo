@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  MYSQL_DATABASE: laravel
+  MYSQL_ROOT_PASSWORD: your_root_password # This should be a secret in production

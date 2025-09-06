@@ -4,8 +4,8 @@ resources:
   - deployment.yaml
   - service.yaml
   - hpa.yaml
-  - ../mysql/mysql-configmap.yaml
-  - ../mysql/mysql-pv-claim.yaml
-  - ../mysql/mysql-statefulset.yaml
-  - ../mysql/mysql-secret.yaml
+  - mysql/mysql-configmap.yaml
+  - mysql/mysql-pv-claim.yaml
+  - mysql/mysql-statefulset.yaml
+  - mysql/mysql-secret.yaml
   - migration-job.yaml
