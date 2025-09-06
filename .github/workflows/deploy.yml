@@ -20,6 +20,10 @@ jobs:
           php-version: '8.2'
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress
+      - name: Prepare Environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
       - name: Run unit tests
         run: ./vendor/bin/phpunit
 
