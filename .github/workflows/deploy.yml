@@ -117,7 +117,7 @@ jobs:
       - name: Deploy to Production Environment
         run: |
           microk8s kubectl --kubeconfig=kubeconfig -n production apply -k k8s/overlays/production
-          microk8s kubectl --kubeconfig=kubeconfig -n production set image deployment/laravel-app larvel-app=${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}
+          microk8s kubectl --kubeconfig=kubeconfig -n production set image deployment/laravel-app laravel-app=${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}
           microk8s kubectl --kubeconfig=kubeconfig -n production delete job laravel-migration --ignore-not-found
           sed -i "s|image: ghcr.io/Suprath/docker-demo:latest|image: ${{ needs.build_and_test.outputs.image_name }}:${{ github.sha }}|g" k8s/base/migration-job.yaml
           microk8s kubectl --kubeconfig=kubeconfig -n production apply -f k8s/base/migration-job.yaml
