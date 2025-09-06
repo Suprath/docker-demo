@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
 - ../../base
 - ingress.yaml
-- ../../phpmyadmin/phpmyadmin-deployment.yaml
-- ../../phpmyadmin/phpmyadmin-service.yaml
-- ../../phpmyadmin/phpmyadmin-ingress.yaml
+- ../base/phpmyadmin/phpmyadmin-deployment.yaml
+- ../base/phpmyadmin/phpmyadmin-service.yaml
+- ../base/phpmyadmin/phpmyadmin-ingress.yaml
