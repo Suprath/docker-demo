@@ -4,4 +4,6 @@ resources:
   - deployment.yaml
   - service.yaml
   - hpa.yaml
+  - mysql-configmap.yaml
+  - mysql-statefulset.yaml
   - migration-job.yaml
