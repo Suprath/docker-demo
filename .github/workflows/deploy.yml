@@ -95,7 +95,7 @@ jobs:
       - name: Deploy to Production Environment
         run: |
           microk8s kubectl --kubeconfig=kubeconfig -n production apply -k k8s/overlays/production
-          microk8s kubectl --kubeconfig=kubeconfig -n production set image deployment/laravel-app larvel-app=ghcr.io/${{ github.repository,, }}:${{ github.sha }}
+          microk8s kubectl --kubeconfig=kubeconfig -n production set image deployment/laravel-app larvel-app=ghcr.io/${{ github.repository }}:${{ github.sha }}
           microk8s kubectl --kubeconfig=kubeconfig -n production delete job laravel-migration --ignore-not-found
-          microk8s kubectl --kubeconfig=kubeconfig -n production set image -f k8s/base/migration-job.yaml laravel-migration=ghcr.io/${{ github.repository,, }}:${{ github.sha }} | microk8s kubectl --kubeconfig=kubeconfig -n production apply -f -
+          microk8s kubectl --kubeconfig=kubeconfig -n production set image -f k8s/base/migration-job.yaml laravel-migration=ghcr.io/${{ github.repository }}:${{ github.sha }} | microk8s kubectl --kubeconfig=kubeconfig -n production apply -f -
           microk8s kubectl --kubeconfig=kubeconfig -n production wait --for=condition=complete job/laravel-migration --timeout=2m
