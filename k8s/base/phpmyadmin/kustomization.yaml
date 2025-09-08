@@ -4,3 +4,4 @@ resources:
 - phpmyadmin-deployment.yaml
 - phpmyadmin-service.yaml
 - phpmyadmin-ingress.yaml
+- ../auth-proxy/

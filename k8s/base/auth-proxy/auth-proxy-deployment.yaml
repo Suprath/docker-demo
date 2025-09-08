@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-proxy
+  template:
+    metadata:
+      labels:
+        app: auth-proxy
+    spec:
+      containers:
+      - name: auth-proxy
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d
+        - name: htpasswd-volume
+          mountPath: /etc/nginx/conf.d/htpasswd
+          subPath: htpasswd
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: auth-proxy-nginx-config
+      - name: htpasswd-volume
+        secret:
+          secretName: auth-proxy-htpasswd
