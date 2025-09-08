@@ -19,8 +19,8 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: nginx-config-volume
-          mountPath: /etc/nginx/conf.d/default.conf
-          subPath: default.conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
         - name: htpasswd-volume
           mountPath: /etc/nginx/htpasswd-secret
       volumes:
