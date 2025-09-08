@@ -10,7 +10,7 @@ data:
 
         location / {
             auth_basic "Authentication Required";
-            auth_basic_user_file /etc/nginx/conf.d/htpasswd;
+            auth_basic_user_file /etc/nginx/htpasswd-secret/htpasswd;
 
             proxy_pass http://phpmyadmin-service:80;
             proxy_set_header Host $host;
